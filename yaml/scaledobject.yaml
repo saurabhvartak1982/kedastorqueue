@@ -1,0 +1,15 @@
+apiVersion: keda.k8s.io/v1alpha1
+kind: ScaledObject
+metadata:
+  name: azure-queue-scaledobject
+  namespace: kedatestns
+spec:
+  scaleTargetRef:
+    deploymentName: kedatest-deployment
+  triggers:
+  - type: azure-queue
+    metadata:
+      # Required: Storage queue name
+      queueName: kedatest
+      connection: QUEUE_CONNECTIONSTRING_ENV_NAME # reference to a connection string in deployment
+      queueLength: "1"
